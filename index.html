@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@huggingface/transformers"></script>
+</head>
+<body>
+    <h1>AI Text Generator</h1>
+    <textarea id="inputText" rows="4" cols="50" placeholder="Enter your text here..."></textarea><br>
+    <button onclick="generateText()">Generate</button>
+    <h2>Output:</h2>
+    <div id="outputText"></div>
+
+    <script>
+        async function generateText() {
+            const inputText = document.getElementById('inputText').value;
+            const model = await transformers.pipeline('text-generation', 'gpt2');
+            const output = await model(inputText, { max_length: 50 });
+            document.getElementById('outputText').innerText = output[0].generated_text;
+        }
+    </script>
+</body>
+</html>
